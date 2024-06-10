@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body>
+    <div class="h-screen w-screen flex justify-center">
+        <div class="w-[100%] max-w-[600px] h-full border-r border-l">
+            <div class="w-full h-[7%] border-b flex">
+                <div class="text-start w-full p-4">
+                    <h1 class="font-bold text-blue-600 text-xl">Chatnightly</h1>
+                </div>
+                <div class="w-full"></div>
+                <div class="text-end w-full p-3">
+                    <span
+                        class="material-symbols-outlined active:bg-gray-300 outline-none select-none cursor-pointer rounded-full p-1">
+                        more_vert
+                    </span>
+                </div>
+            </div>
+            <div class="w-full h-[86%] overflow-y-scroll no-scrollbar" id="chat_holder">
+
+
+                <div class="w-full p-1 flex justify-start">
+                    <div class="bg-gray-200 px-4 rounded-full max-w-[50%] py-2">
+                        <span class="text-black text-sm">Hi! How are you today?</span>
+                    </div>
+                    <div class="p-2">
+                        <span class="text-gray-400">10:00 AM</span>
+                    </div>
+                </div>
+
+                <div class="w-full p-1 flex justify-end">
+                    <div class="p-2">
+                        <span class="text-gray-400">10:00 AM</span>
+                    </div>
+                    <div class="bg-blue-600 px-4 rounded-full max-w-[50%] py-2">
+                        <span class="text-white text-sm">Hi!</span>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="w-full flex h-[7%] border-t border-gray-900 p-1">
+                <input type="text" class="border w-full rounded-full font-bold px-4 py-2">
+                <button type="button" class="px-4 py-2 text-black active:opacity-[0.6]"><span
+                        class="material-symbols-outlined"
+                        id="send_btn"
+                        >
+                        upload
+                    </span></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function createMessage(type, text) {
+            const holder = document.createElement("div");
+            const info = document.createElement("div");
+            info.className = "p-2";
+            const timeSpan = document.createElement("span");
+            timeSpan.className = "text-gray-400";
+
+            const currentTime = new Date();
+            const hours = String(currentTime.getHours()).padStart(2, '0');
+            const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+            const formattedTime = `${hours}:${minutes}`;
+
+            timeSpan.innerText = formattedTime;
+
+            const msgDiv = document.createElement("div");
+            const msgSpan = document.createElement("span");
+            msgSpan.innerText = text;
+
+            info.appendChild(timeSpan);
+
+            if (type === 'user') {
+                msgDiv.className = "bg-blue-600 px-4 rounded-full max-w-[50%] py-2";
+                holder.className = "w-full p-1 flex justify-end";
+                msgSpan.className = "text-white text-sm";
+                holder.appendChild(info);
+                holder.appendChild(msgDiv);
+            } else {
+                msgDiv.className = "bg-gray-300 px-4 rounded-full max-w-[50%] py-2";
+                holder.className = "w-full p-1 flex justify-start";
+                msgSpan.className = "text-black text-sm";
+                holder.appendChild(msgDiv);
+                holder.appendChild(info);
+            }
+            msgDiv.appendChild(msgSpan);
+
+
+            chat_holder.appendChild(holder);
+        }
+        window.addEventListener('load', function () {
+            const chat_holder = document.getElementById('chat_holder');
+            const send_btn = document.getElementById('send_btn');
+            createMessage("user", "hi!~")
+        })
+    </script>
+</body>
+
+</html>
